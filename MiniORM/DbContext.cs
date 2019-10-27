@@ -120,7 +120,7 @@ namespace MiniORM
 
         private string GetTableName(Type type)
         {
-            var tableName = ((TableAttribute)Attribute.GetCustomAttribute(type, typeof(TableAttribute))).Name;
+            var tableName = ((TableAttribute)Attribute.GetCustomAttribute(type, typeof(TableAttribute)))?.Name;
 
             if (tableName == null)
             {
@@ -173,7 +173,7 @@ namespace MiniORM
 
                 var mapCollectionMethod = typeof(DbContext)
                     .GetMethod("MapCollection", BindingFlags.Instance | BindingFlags.NonPublic)
-                    .MakeGenericMethod(collectionType);
+                    .MakeGenericMethod(entityType, collectionType);
 
                 mapCollectionMethod.Invoke(this, new object[] { dbSet, collection});
             }
